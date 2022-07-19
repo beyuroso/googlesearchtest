@@ -1,10 +1,7 @@
 package com.rotunda.app;
 
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
 import com.codeborne.selenide.SelenideElement;
-
-import org.openqa.selenium.By;
+import com.codeborne.selenide.WebDriverRunner;
 
 public class GoogleTerms {
 	SelenideElement pageElement;
@@ -18,7 +15,7 @@ public class GoogleTerms {
 		return termsPage;
 	}
 	
-	public void verifyIsTermsPage() {
-		$(By.className("IzKDNd")).shouldHave(text("What’s covered in these terms"));
+	public String getPageUrl() {
+		return WebDriverRunner.getWebDriver().getCurrentUrl();
 	}
 }

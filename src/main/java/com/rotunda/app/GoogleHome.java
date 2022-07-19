@@ -4,24 +4,27 @@ import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import com.codeborne.selenide.SelenideElement;
 
 import org.openqa.selenium.By;
 
-import com.codeborne.selenide.SelenideElement;
-
 public class GoogleHome {
+	public static final GoogleHome SINGLETON = new GoogleHome();
 	SelenideElement searchValue;
 	
-	public GoogleHome() {
-		
-	}
-	 
-	public void openGoogleHome() {
+	private static final String SEARCH_BAR_CSS_SELECT = "q";
+	private static final String IM_FEELING_LUCKY_CSS_SELECT = "#gbqfbb";
+	
+	private GoogleHome() {
 		open("http://google.com");
 	}
+
+	public void setSearch(String searchString) {
+		searchValue = $(By.name(SEARCH_BAR_CSS_SELECT)).setValue(searchString);
+	}
 	
-	public void setSearch() {
-		searchValue = $(By.name("q")).setValue("Rotunda Solutions");
+	public static void visitPage() {
+		open("http://google.com");
 	}
 	
 	public GoogleResult clickSearchButton() {
@@ -33,5 +36,9 @@ public class GoogleHome {
 		$$(By.className("pHiOh")).findBy(text("Terms")).pressEnter();
 		GoogleTerms result = GoogleTerms.fromHomeFooter();
 		return result;
+	} 
+	
+	public static boolean imFeelingLuckyButtonExists() {
+		return $(IM_FEELING_LUCKY_CSS_SELECT).exists();
 	}
 }
